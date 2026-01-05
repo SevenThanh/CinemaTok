@@ -1,12 +1,16 @@
-import React from "react";
+"use client";
 
-export default function InteractionBar() {
+import React, { useState } from "react";
+
+export default function InteractionBar({ movieId }: { movieId: number }) {
+  const [isLiked, setIsLiked] = useState(false);
+
   return (
-    <div className="absolute bottom-20 right-2 flex flex-col items-center gap-6 z-20">
+    <div className="absolute bottom-20 right-2 flex flex-col items-center gap-6 z-20 pointer-events-auto">
       <div className="relative group">
          <div className="w-12 h-12 rounded-full bg-white p-[1px]">
             <img 
-              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" 
+              src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${movieId}`} 
               alt="User" 
               className="w-full h-full rounded-full bg-black"
             />
@@ -17,7 +21,19 @@ export default function InteractionBar() {
             </svg>
          </div>
       </div>
-      <ActionButton icon={<HeartIcon />} label="8.2k" />
+
+      <button 
+        onClick={() => setIsLiked(!isLiked)}
+        className="flex flex-col items-center gap-1 group"
+      >
+        <div className="p-3 bg-black/40 backdrop-blur-md border border-white/10 rounded-full transition-all group-active:scale-90 hover:bg-black/60">
+          <HeartIcon filled={isLiked} />
+        </div>
+        <span className="text-white text-xs font-medium drop-shadow-md opacity-90">
+            {isLiked ? "8.3k" : "8.2k"}
+        </span>
+      </button>
+
       <ActionButton icon={<BookmarkIcon />} label="Save" />
       <ActionButton icon={<ShareIcon />} label="Share" />
     </div>
@@ -35,8 +51,14 @@ function ActionButton({ icon, label }: { icon: React.ReactNode; label: string })
   );
 }
 
-const HeartIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7 text-white fill-white/10" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+const HeartIcon = ({ filled }: { filled: boolean }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    className={`w-8 h-8 transition-colors ${filled ? "text-red-500 fill-red-500" : "text-white fill-white/10"}`} 
+    viewBox="0 0 24 24" 
+    stroke="currentColor" 
+    strokeWidth={filled ? 0 : 2}
+  >
     <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
   </svg>
 );
