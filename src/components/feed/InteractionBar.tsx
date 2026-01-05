@@ -4,7 +4,7 @@ export default function InteractionBar() {
   return (
     <div className="absolute bottom-20 right-2 flex flex-col items-center gap-6 z-20">
       <div className="relative group">
-         <div className="w-10 h-10 rounded-full bg-white p-[1px]">
+         <div className="w-12 h-12 rounded-full bg-white p-[1px]">
             <img 
               src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" 
               alt="User" 
@@ -27,10 +27,10 @@ export default function InteractionBar() {
 function ActionButton({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
     <button className="flex flex-col items-center gap-1 group">
-      <div className="p-2 bg-black/20 rounded-full backdrop-blur-sm group-active:scale-90 transition-transform">
+      <div className="p-3 bg-black/40 backdrop-blur-md border border-white/10 rounded-full transition-all group-active:scale-90 hover:bg-black/60">
         {icon}
       </div>
-      <span className="text-white text-xs font-medium drop-shadow-md">{label}</span>
+      <span className="text-white text-xs font-medium drop-shadow-md opacity-90">{label}</span>
     </button>
   );
 }

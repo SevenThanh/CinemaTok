@@ -8,9 +8,6 @@ export default function VideoCard({ index }: { index: number }) {
       <VideoPlayer />
       <InfoOverlay />
       <InteractionBar />
-      <h1 className="absolute top-20 left-4 text-white font-bold z-20 drop-shadow-md">
-        Movie #{index}
-      </h1>
     </section>
   );
 }
