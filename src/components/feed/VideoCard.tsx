@@ -1,8 +1,11 @@
+import VideoPlayer from "./VideoPlayer";
+
 export default function VideoCard({ index }: { index: number }) {
   return (
-    <section className="w-full h-full snap-start bg-zinc-900 flex items-center justify-center border-b border-white/10">
-      <h1 className="text-white text-4xl font-bold">
-        #{index}
+    <section className="w-full h-full snap-start bg-black border-b border-white/5 relative">
+      <VideoPlayer />
+      <h1 className="absolute top-20 left-4 text-white font-bold z-20 drop-shadow-md">
+        Movie #{index}
       </h1>
     </section>
   );
