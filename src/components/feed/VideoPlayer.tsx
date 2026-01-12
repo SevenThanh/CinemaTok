@@ -14,7 +14,7 @@ interface VideoPlayerProps {
 }
 
 export default function VideoPlayer({ videoKey, isActive }: VideoPlayerProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(isActive);
   const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function VideoPlayer({ videoKey, isActive }: VideoPlayerProps) {
           muted
           width="100%"
           height="100%"
-          onReady={() => setHasLoaded(true)}
+          onPlay={() => setHasLoaded(true)}
           controls={false}
         />
       </div>
