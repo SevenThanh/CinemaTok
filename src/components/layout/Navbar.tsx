@@ -15,7 +15,6 @@ export default function Navbar() {
       <button className="text-white opacity-90 hover:opacity-100 transition-opacity">
         <SearchIcon />
       </button>
-
     </nav>
   );
 }

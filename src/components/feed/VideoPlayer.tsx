@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { useAudio } from "@/hooks/useAudioContext";
 
@@ -15,19 +15,37 @@ interface VideoPlayerProps {
 }
 
 export default function VideoPlayer({ videoKey, isActive }: VideoPlayerProps) {
-  const [isPlaying, setIsPlaying] = useState(isActive);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
   const { isMuted } = useAudio();
+  const playerRef = useRef<any>(null);
+
+  const pausePlayer = () => {
+    try {
+      const internal = playerRef.current?.getInternalPlayer();
+      if (internal?.pauseVideo) internal.pauseVideo();
+    } catch {}
+  };
 
   useEffect(() => {
-    setIsPlaying(isActive);
+    if (isActive) {
+      setIsPlaying(true);
+    } else {
+      setIsPlaying(false);
+      pausePlayer();
+    }
   }, [isActive]);
 
   useEffect(() => {
     setHasLoaded(false);
   }, [videoKey]);
 
-  const togglePlay = () => setIsPlaying(!isPlaying);
+  const togglePlay = () => {
+    if (isPlaying) {
+      pausePlayer();
+    }
+    setIsPlaying(!isPlaying);
+  };
 
   return (
     <div
@@ -36,6 +54,7 @@ export default function VideoPlayer({ videoKey, isActive }: VideoPlayerProps) {
     >
       <div className="absolute inset-0 pointer-events-none scale-[1.5]">
         <ReactPlayer
+          ref={playerRef}
           src={`https://www.youtube.com/watch?v=${videoKey}`}
           playing={isPlaying && isActive}
           loop

@@ -18,13 +18,12 @@ export default function VideoCard({ movie, index }: VideoCardProps) {
   useEffect(() => {
     const card = cardRef.current;
     if (!card) return;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsActive(entry.isIntersecting);
       },
+      { threshold: 0.5 }
     );
-
     observer.observe(card);
     return () => observer.disconnect();
   }, []);
