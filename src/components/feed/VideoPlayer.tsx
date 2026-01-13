@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { useAudio } from "@/hooks/useAudioContext";
 
 const ReactPlayer = dynamic(() => import("react-player"), {
   ssr: false,
@@ -16,6 +17,7 @@ interface VideoPlayerProps {
 export default function VideoPlayer({ videoKey, isActive }: VideoPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(isActive);
   const [hasLoaded, setHasLoaded] = useState(false);
+  const { isMuted } = useAudio();
 
   useEffect(() => {
     setIsPlaying(isActive);
@@ -35,9 +37,9 @@ export default function VideoPlayer({ videoKey, isActive }: VideoPlayerProps) {
       <div className="absolute inset-0 pointer-events-none scale-[1.5]">
         <ReactPlayer
           src={`https://www.youtube.com/watch?v=${videoKey}`}
-          playing={isPlaying}
+          playing={isPlaying && isActive}
           loop
-          muted
+          muted={isMuted}
           width="100%"
           height="100%"
           onPlay={() => setHasLoaded(true)}
